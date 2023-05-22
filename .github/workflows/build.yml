@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches: [ "master", "develop" ]
+  pull_request:
+    branches: [ "master", "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: sudo apt install build-essential qt6-base-dev qmake6 libeigen3-dev libboost-all-dev libfftw3-dev qt6-tools-dev
+    - uses: Jimver/cuda-toolkit@v0.2.10
+      id: cuda-toolkit
+      with:
+        cuda: '12.1.0'
+    - name: Configure QMake
+      run: mkdir build && cd build && qmake6 ../lafluxxy.pro
+    - name: Build
+      run: cd build && make -j

@@ -403,8 +403,8 @@ void ResultsTab::construct_ft(MatrixXXd data, RenderArea* destination) {
         for(unsigned int j=0; j < halfcolsize; j++) {
             double xreal = ft_data[i * ftcolsize + j][0];
             double xcomplex = ft_data[i * ftcolsize + j][1];
-            ft_data_mat(std::fmod(i + halfrowsize, rowsize), halfcolsize - j - 1) = xreal * xreal + xcomplex * xcomplex;
-            ft_data_mat(std::fmod(i + halfrowsize, rowsize), j + halfcolsize) = xreal * xreal + xcomplex * xcomplex;
+            ft_data_mat((i + halfrowsize) % rowsize, halfcolsize - j - 1) = (xreal * xreal + xcomplex * xcomplex);
+            ft_data_mat((i + halfrowsize) % rowsize, j + halfcolsize) = (xreal * xreal + xcomplex * xcomplex);
         }
     }
 

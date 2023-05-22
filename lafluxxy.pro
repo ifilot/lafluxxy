@@ -120,22 +120,22 @@ HEADERS += src/card_manager.h \
 RESOURCES += assets.qrc
 
 unix {
-    exists(/usr/local/cuda-10.0/bin/nvcc) {
-        CUDA_DIR = /usr/local/cuda-10.0
-        CUDA_LIBRT = /usr/local/cuda-10.0/lib64/libcudart_static.a
+    exists(/usr/local/cuda-12.0/bin/nvcc) {
+        CUDA_DIR = /usr/local/cuda-12.0
+        CUDA_LIBRT = /usr/local/cuda-12.0/lib64/libcudart_static.a
     }
 
-    exists(/usr/local/cuda-10.1/bin/nvcc) {
-        CUDA_DIR = /usr/local/cuda-10.1
-        CUDA_LIBRT = /usr/local/cuda-10.1/lib64/libcudart_static.a
+    exists(/usr/local/cuda-12.1/bin/nvcc) {
+        CUDA_DIR = /usr/local/cuda-12.1
+        CUDA_LIBRT = /usr/local/cuda-12.1/lib64/libcudart_static.a
     }
 
     # CUDA_ARCH = compute_52
     NVCCFLAGS = -use_fast_math --compile -cudart static -O3
 
-    cuda.commands = $$CUDA_DIR/bin/nvcc -m64 -c $$NVCCFLAGS $$LIBS  ${QMAKE_FILE_NAME} -o ${QMAKE_FILE_OUT}
+    cuda.commands = $$CUDA_DIR/bin/nvcc -m64 -c $$NVCCFLAGS $$LIBS ${QMAKE_FILE_NAME} -o ${QMAKE_FILE_OUT}
     cuda.dependency_type = TYPE_C
-    cuda.depend_command = $$CUDA_DIR/bin/nvcc -M $$CUDA_INC $$NVCCFLAGS ${QMAKE_FILE_NAME}
+    cuda.depend_command = $$CUDA_DIR/bin/nvcc -M $$CUDA_INC $$NVCCFLAGS ${QMAKE_FILE_OUT}
 
     # other libraries
     INCLUDEPATH += $$CUDA_DIR/include /usr/include/eigen3
@@ -143,7 +143,7 @@ unix {
     QMAKE_LIBDIR += $$CUDA_DIR/lib64
 
     cuda.input = CUDA_SOURCES
-    cuda.output = ${OBJECTS_DIR}${QMAKE_FILE_BASE}_cuda.o
+    cuda.output = ${OBJECTS_DIR}/${QMAKE_FILE_BASE}_cuda.o
 }
 
 win32 {
