@@ -7,7 +7,7 @@ on:
     branches: [ "master", "develop" ]
 
 jobs:
-  build:
+  build-linux:
 
     runs-on: ubuntu-latest
 
@@ -23,3 +23,61 @@ jobs:
       run: mkdir build && cd build && qmake6 ../lafluxxy.pro
     - name: Build
       run: cd build && make -j
+
+  build-windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+    - uses: Jimver/cuda-toolkit@v0.2.10
+      id: cuda-toolkit
+      with:
+        cuda: '12.1.0'
+    - name: Install Eigen3
+      run: choco install --verbose eigen
+    - name: Install Boost
+      run: choco install --verbose boost-msvc-14.3
+    - name: Download Eigen3
+      uses: suisei-cn/actions-download-file@v1.4.0
+      with:
+        url: "https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip"
+    - name: Unzip Eigen3
+      shell: bash -l {0}
+      run: |
+        7z x eigen-3.4.0.zip
+    - name: Download Boost
+      uses: suisei-cn/actions-download-file@v1.4.0
+      with:
+        url: "https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.zip"
+    - name: Unzip Boost
+      shell: bash -l {0}
+      run: |
+        7z x boost_1_82_0.zip
+    - name: Download FFTW3
+      uses: suisei-cn/actions-download-file@v1.4.0
+      with:
+        url: "https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip"
+    - name: Unzip FFTW3
+      shell: bash -l {0}
+      run: |
+        mkdir fftw-3.3.5 && cd fftw-3.3.5 && 7z x ../fftw-3.3.5-dll64.zip
+    - name: Placing dependencies
+      shell: bash -l {0}
+      run: |
+        rm -v boost_1_82_0.zip eigen-3.4.0.zip fftw-3.3.5-dll64.zip
+        mkdir vendor
+        mv eigen-3.4.0 vendor/
+        mv boost_1_82_0 vendor/
+        mv fftw-3.3.5 vendor/
+    - name: Set-up MSVC toolchain
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: amd64
+    - name: Build
+      shell: bash -l {0}
+      run: |
+        echo $PATH
+        mkdir build && cd build && qmake ../lafluxxy.pro && make -j

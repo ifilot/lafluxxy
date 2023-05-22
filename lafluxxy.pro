@@ -178,7 +178,7 @@ win32 {
     cuda.commands = $$CUDA_DIR/bin/nvcc.exe $$NVCC_OPTIONS $$CUDA_INC $$LIBS --machine $$SYSTEM_TYPE -c -o ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
     cuda.dependency_type = TYPE_C
 
-    LIBS += -LD:/PROGRAMMING/LIBS/boost-1.74.0-win-x64/lib \
+    LIBS += -LD:/PROGRAMMING/LIBS/boost-1.82.2-win-x64/lib \
             -LD:/PROGRAMMING/LIBS/fftw-3.3.8-win-x64/lib \
             -lboost_filesystem-vc142-mt-x64-1_74 \
             -lboost_system-vc142-mt-x64-1_74 \
