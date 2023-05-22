@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // create vertical layout
     QVBoxLayout *layout = new QVBoxLayout();
-    layout->setMargin(5);
+    // layout->setMargin(5);
     layout->addWidget(this->tabs);
     widget->setLayout(layout);
 

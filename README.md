@@ -5,18 +5,16 @@ LaFluxxy is a simple GUI for performing reaction-diffusion integration on a rect
 
 ## Dependencies
 
-
+```bash
+sudo apt install build-essential qt6-base-dev qmake6 libeigen3-dev \
+libboost-all-dev libfftw3-dev qt6-tools-dev
+```
 
 ## Compilation
 
 ```bash
 mkdir build
 cd build
-qmake ../lafluxxy.pro
+qmake6 ../lafluxxy.pro
 make -j9
-```
-
-### Debian
-```
-sudo apt install qt5-default qt5-qmake libeigen3-dev libboost-all-dev
 ```
