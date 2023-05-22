@@ -19,7 +19,7 @@ jobs:
       id: cuda-toolkit
       with:
         cuda: '12.1.0'
-    - name: Configure CMake
-      run: mkdir build && cd build && qmake ../lafluxxy.pro
+    - name: Configure QMake
+      run: mkdir build && cd build && qmake6 ../lafluxxy.pro
     - name: Build
       run: cd build && make -j
